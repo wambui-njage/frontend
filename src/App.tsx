@@ -1,26 +1,35 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useFetch from './hooks/useFetch';
 
-function App() {
+//mui
+import { Box } from '@mui/material';
+import ReadingList from './views/ReadingList';
+import Header from './components/header/Header';
+
+const App: React.FC = () => {
+    const query = `
+    query Books{
+      books {
+        title
+        author
+        coverPhotoURL
+        readingLevel
+      }
+    }
+  `;
+
+  // add url to env
+ useFetch('http://localhost:4000', query);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Box sx={{marginTop:10}}>
+        <ReadingList />
+      </Box>
+    </>
   );
-}
+};
 
 export default App;
